@@ -26,7 +26,7 @@ nums2 = [3, 4]
  *
  */
 public class MedianSortedArrays {
-	public double findMedianSortedArrays(int[] A, int[] B) {
+	public double findMedianSortedArrays1(int[] A, int[] B) {
         int m = A.length;
         int n = B.length;
         if (m > n) { // to ensure m<=n
@@ -61,5 +61,45 @@ public class MedianSortedArrays {
         return 0.0;
     }
 
-
+	public static double findMedianSortedArrays(int[] A, int[] B) {
+		int m = A.length;
+		int n = B.length;
+		if(m > n) {
+			int[] temp = A; A = B; B = temp;
+			int tmp = m; m = n; n = tmp;
+		}
+		
+		int imax = m; int imin = 0; int med = (m+n+1)/2;
+		while(imax >= imin) {
+			int i = (imax + imin) / 2;
+			int j = med - i ;
+			if(i < imax && A[i] < B[j-1]) {
+				imin = i + 1;
+			}else if(i > imin && A[i-1] > B[j]) {
+				imax = i - 1;
+			}else {
+				int maxLeft = 0;
+				if(i==0) {
+					maxLeft = B[j-1];
+				} else if (j == 0) { maxLeft = A[i-1];}
+				else {
+					maxLeft = Math.max(A[i-1], B[j-1]);
+				}
+				if((m + n ) % 2 == 1){
+					return maxLeft;
+				}
+				int minRight = 0;
+				if(m==i) {
+					minRight = B[j];
+				}else if (j == n) { minRight = A[i]; }
+				else {
+					minRight = Math.min(B[j], A[i]);
+				}
+				
+				 return (maxLeft + minRight) / 2.0;
+			}
+		}
+		
+		return 0;
+	}
 }
