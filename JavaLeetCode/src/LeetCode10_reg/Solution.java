@@ -56,7 +56,18 @@ import java.util.regex.Pattern;
  *
  */
 public class Solution {
-
+	/**
+	 * - p 为空？ s空否
+	 * 
+	 * - p 不为空
+	 * 	- 首位：匹配 且 s不为空
+	 * 	- 后一位是否*
+	 * 		- 未匹配 || 首位非空且匹配，p不动，s吃掉首位
+	 * 		- 首位匹配且不为空 && 全部后移
+	 * @param s
+	 * @param p
+	 * @return
+	 */
 	 public static boolean isMatch(String s, String p) {
 		 if(p.isEmpty())return s.isEmpty();
 		 boolean first= (!s.isEmpty()&&((p.charAt(0) == s.charAt(0) )|| p.charAt(0) == '.' ));
@@ -67,6 +78,8 @@ public class Solution {
 			 return first && isMatch(s.substring(1),p.substring(1));
 		 }
 	  }
+
+	 
 	public static void main(String[] args) {
 		String s = "1";
 		Pattern p = Pattern.compile(".*");
