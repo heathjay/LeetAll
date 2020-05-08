@@ -48,5 +48,67 @@ p = "a*c?b"
 package LeetCode44;
 
 public class Solution {
-
+	/**
+	 * 双指针
+	 * - 用jstart去控制移动
+	 * - istart 去测试0或1 匹配
+	 * @param s
+	 * @param p
+	 * @return
+	 */
+	public boolean isMatch(String s, String p) {
+		if(p==null||p.isEmpty()) return s==null || s.isEmpty();
+		int i = 0, j = 0, jstart = -1, istart = -1, slen = s.length(), plen =p.length();
+		
+		while(i<slen) {
+			if(j<plen && (s.charAt(i) == p.charAt(j)|| p.charAt(j) == '?')) {
+				i++;
+				j++;
+			}
+			
+			else if(j<plen && p.charAt(j) == '*') {
+				istart = i;
+				jstart = j++;
+			}else if(istart > -1) {
+				i = ++istart;
+				j=jstart+1;
+			}else {
+				return false;
+			}
+		}
+		
+		while(j<plen && p.charAt(j) =='*')j++;
+		return j == plen;
+		
+	}
+	/**
+	 * 动态规划
+	 * @param s
+	 * @param p
+	 * @return
+	 */
+	public boolean isMatch1(String s, String p) {
+		if(p==null||p.isEmpty()) return s==null||s.isEmpty();
+		int slen = s.length(), plen = p.length();
+		boolean[][] dp = new boolean[slen+1][plen+1];
+		
+		dp[0][0] = true;
+		//只有j位置和其前面全为*才为true
+		for(int j = 1; j <= plen;j++) dp[0][j] = p.charAt(j-1)=='*' && dp[0][j-1];
+		for(int i = 1; i <= slen;i++) {
+			for(int j = 1; j <= plen;j++) {
+				char si = s.charAt(i-1);
+				char pj = p.charAt(j-1);
+				if(si == pj||pj =='?') {
+					dp[i][j] = dp[i-1][j-1];
+				}else if(pj == '*') {
+					dp[i][j] = dp[i-1][j]||dp[i][j-1];
+				}
+			}
+		}
+		return dp[slen][plen];
+	}
+	
+	
 }
+

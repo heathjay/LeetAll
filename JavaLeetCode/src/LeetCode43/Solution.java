@@ -20,6 +20,13 @@ num1 和 num2 均不以零开头，除非是数字 0 本身。
 package LeetCode43;
 
 public class Solution {
+	/**
+	 * 模仿乘法
+	 * - res数组位置和i和j的关系
+	 * @param num1
+	 * @param num2
+	 * @return
+	 */
 	 public String multiply(String num1, String num2) {
 		 int m = num1.length();
 		 int n = num2.length();

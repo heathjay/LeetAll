@@ -60,12 +60,42 @@ public class Solution {
 			left[i] = Math.max(height[i], left[i-1]);
 		}
 		
-		for(int i = len-1;i>0;i--) {
-			right[i] = Math.max(height[i], right[i]);
+		for(int i = len-2;i>=0;i--) {
+			right[i] = Math.max(height[i], right[i+1]);
 		}
-		
+		//这里注意
 		for(int i = 1; i < len -1; i++) {
 			res += Math.min(left[i], right[i]) - height[i];
+		}
+		return res;
+	}
+	/**
+	 * 双指针
+	 * @param height
+	 * @return
+	 */
+	public int test3(int[] height) {
+		int left = 0, right = height.length - 1;
+		int res = 0;
+		int left_max = 0, right_max = 0;
+		while(left < right) {
+			if(height[left] < height[right]) {
+				if(height[left] >= left_max) {
+					left_max = height[left];
+					
+				}else {
+					res += left_max - height[left];
+				}
+				left++;
+			}else {
+				if(height[right] >= right_max) {
+					right_max = height[right];
+					
+				}else {
+					res += right_max - height[right];
+				}
+				right--;
+			}
 		}
 		return res;
 	}
