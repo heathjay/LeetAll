@@ -17,6 +17,7 @@
 package LeetCode46;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,24 @@ class Solution {
     			pre.remove(pre.size() -1);
     		}
     		
+    }
+    /**
+     * 不需要额外的监管
+     * - 按位来进行交换
+     * @param n
+     * @param output
+     * @param res
+     * @param first
+     */
+    public void backtrack(int n, ArrayList<Integer> output, List<List<Integer>> res, int first) {
+    	if(first == n) {
+    		res.add(new ArrayList<Integer>(output));
+    	}
+    	for(int i = first; i < n;i++) {
+    		Collections.swap(output, first, i);
+    		backtrack(n,output,res,first+1);
+    		Collections.swap(output, first, i);
+    	}
     }
     public static void main(String[] args) {
     	int[] nums = {1,2,3};
