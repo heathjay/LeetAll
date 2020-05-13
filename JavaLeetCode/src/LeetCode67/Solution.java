@@ -37,7 +37,7 @@ public class Solution {
     	StringBuilder sb = new StringBuilder();
     	for(int i =0 ;i < m ;i++) {
     		int x = a.charAt(m -1 -i) - '0';
-    		int y = i > n- 1? 0:(b.charAt(n-1-i) - '0');
+    		int y = i >= n? 0:(b.charAt(n-1-i) - '0');
     		int sum = x + y + pre;
     		
     		if(sum == 2) {
@@ -47,6 +47,7 @@ public class Solution {
     			sb.append("1");
     			pre =1;
     		}else if(sum == 0 || sum == 1){
+    			sb.append(sum);
     			pre = 0;
     		}
     	}
