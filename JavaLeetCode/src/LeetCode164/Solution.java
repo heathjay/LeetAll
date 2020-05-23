@@ -26,6 +26,11 @@ package LeetCode164;
 import java.util.Arrays;
 
 public class Solution {
+	/**
+	 * 比较排序
+	 * @param nums
+	 * @return
+	 */
     public int maximumGap(int[] nums) {
     	if(nums.length <2) return 0;
     	Arrays.sort(nums);
@@ -35,4 +40,34 @@ public class Solution {
     	}
     	return res;
     }
+    /**
+     * 非比较排序
+     * @param nums
+     * @return
+     */
+    public int maximumGap1(int[] nums) {
+    	if(nums.length < 2) return 0;
+    	int max = nums[0], min = nums[0], bias = 0;
+    	for(int num : nums) {
+    		max =Math.max(max, num);
+    		min = Math.min(min, num);
+    	}
+    	bias = 0-min;
+    	int[] counter = new int[max - min + 1];
+    	for(int num :nums) counter[num + bias]++;
+    	int ans = 0;
+    	int pre = -1;
+    	for(int i = 0; i < counter.length;i++) {
+    		if(counter[i] != 0) {
+    			if(pre != -1) {
+    				ans = Math.max(ans, i - pre);
+    				pre = -i;
+    			}else {
+    				pre = i;
+    			}
+    		}
+    	}
+    	return ans;
+    }
+    
 }
