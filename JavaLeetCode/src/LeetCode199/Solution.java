@@ -33,11 +33,17 @@ class TreeNode {
 public class Solution {
 	  public List<Integer> rightSideView(TreeNode root) {
 		  List<Integer> res = new ArrayList<>();
-		  Stack<TreeNode> stack = new Stack<>();
+		  LinkedList<TreeNode> stack = new LinkedList<>();
 		  if(root == null) return res;
-		  while(root != null) {
-			  res.add(root.val);
-			  root = root.right;
+		  stack.add(root);
+		  while(!stack.isEmpty()) {
+			  int len = stack.size();
+			  for(int i = 0; i < len;i++) {
+				  TreeNode node =stack.poll();
+				  if(i == len -1) res.add(node.val);
+				  if(node.left != null) stack.addLast(node.left);
+				  if(node.right != null) stack.addLast(node.right);  
+			  }
 		  }
 		  return res;
 	    }
